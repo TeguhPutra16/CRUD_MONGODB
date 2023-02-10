@@ -11,9 +11,11 @@ type CorePerson struct {
 type ServiceEntities interface {
 	Create(input CorePerson) (err error)
 	GetAll() ([]CorePerson, error)
+	GetPerson(id primitive.ObjectID) (CorePerson, error)
 }
 
 type RepositoryEntities interface {
 	Create(input CorePerson) (err error)
 	GetAll() ([]CorePerson, error)
+	GetPerson(id primitive.ObjectID) (CorePerson, error)
 }
