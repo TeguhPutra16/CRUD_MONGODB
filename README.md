@@ -22,6 +22,6 @@ https://www.youtube.com/watch?v=PmjTR5FvnuE
 - setelah itu `go run main.go` untuk menjalankannya.
 
 Di Aplikasi Postman atau sejenisnya :
-- localhost:8080/person POST untuk Create User
-
-- localhost:8080/people GET untuk Menampilkan User-user
+- localhost:8080/person POST untuk Create User.
+- localhost:8080/person/id GET untuk menampilkan user berdasarkan id.
+- localhost:8080/people GET untuk Menampilkan User-user.
