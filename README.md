@@ -23,3 +23,5 @@ https://www.youtube.com/watch?v=PmjTR5FvnuE
 
 Di Aplikasi Postman atau sejenisnya :
 - localhost:8080/person POST untuk Create User
+
+- localhost:8080/people GET untuk Menampilkan User-user
