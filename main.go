@@ -11,13 +11,10 @@ import (
 
 func main() {
 	client := mongoDB.InitDB()
-
 	e := echo.New()
-
 	factory.InitFactory(e, client)
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.CORS())
-
 	e.Logger.Fatal(e.Start(":8080"))
 
 	// Enable logging

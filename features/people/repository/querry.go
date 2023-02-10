@@ -5,6 +5,7 @@ import (
 	"teguh/features/people"
 	"time"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -30,4 +31,25 @@ func (repo *userRepository) Create(input people.CorePerson) (err error) {
 		return err
 	}
 	return nil
+}
+
+// GetAll implements people.RepositoryEntities
+func (repo *userRepository) GetAll() ([]people.CorePerson, error) {
+	var people []Person
+	collection := repo.client.Database("thepolyglotdeveloper").Collection("people")
+	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+	cursor, err := collection.Find(ctx, bson.M{})
+	if err != nil {
+		return nil, err
+	}
+
+	defer cursor.Close(ctx)
+	for cursor.Next(ctx) {
+		var person Person
+		cursor.Decode(&person)
+		people = append(people, person)
+	}
+	dataCore := ListModelToCore(people)
+	return dataCore, nil
+
 }

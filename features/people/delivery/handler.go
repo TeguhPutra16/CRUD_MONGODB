@@ -18,7 +18,7 @@ func New(Service people.ServiceEntities, e *echo.Echo) {
 	}
 
 	e.POST("/person", handler.Create)
-	// e.GET("/users", handler.GetAll, middlewares.JWTMiddleware())
+	e.GET("/people", handler.GetAll)
 	// e.PUT("/users/:id", handler.Update, middlewares.JWTMiddleware())
 	// e.DELETE("/users/:id", handler.DeleteById, middlewares.JWTMiddleware())
 	// e.GET("/users/:id", handler.GetById, middlewares.JWTMiddleware())
@@ -38,4 +38,13 @@ func (delivery *PersonDelivery) Create(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("erorr read data"+errResultCore.Error()))
 	}
 	return c.JSON(http.StatusOK, helper.SuccessResponse("Success create person"))
+}
+
+func (delivery *PersonDelivery) GetAll(c echo.Context) error {
+	result, err := delivery.PersonService.GetAll()
+	if err != nil {
+		return c.JSON(http.StatusBadGateway, helper.FailedResponse("erorr read data"+err.Error()))
+
+	}
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("Success Get People", result))
 }
