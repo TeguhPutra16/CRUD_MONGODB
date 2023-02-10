@@ -19,3 +19,23 @@ func FromCoreToModel(dataCore people.CorePerson) Person { //fungsi yang mengambi
 	} ///formating data berdasarkan data gorm dan kita mapping data yang kita butuhkan untuk inputan  klien
 	return Person //insert user
 }
+
+func (dataModel *Person) ModelToCore() people.CorePerson {
+	var Core = people.CorePerson{
+		ID:        dataModel.ID,
+		Firstname: dataModel.Firstname,
+		Lastname:  dataModel.Lastname,
+	}
+	return Core
+}
+
+func ListModelToCore(dataModel []Person) []people.CorePerson {
+	var dataCore []people.CorePerson
+
+	for _, v := range dataModel {
+		dataCore = append(dataCore, v.ModelToCore())
+
+	}
+	return dataCore
+
+}

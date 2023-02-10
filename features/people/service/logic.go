@@ -24,3 +24,12 @@ func (service *PersonService) Create(input people.CorePerson) (err error) {
 	}
 	return nil
 }
+
+// GetAll implements people.ServiceEntities
+func (service *PersonService) GetAll() ([]people.CorePerson, error) {
+	Data, err := service.personRepository.GetAll()
+	if err != nil {
+		return nil, errors.New("Gagal menampilkan")
+	}
+	return Data, nil
+}
