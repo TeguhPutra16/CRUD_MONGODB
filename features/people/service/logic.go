@@ -3,6 +3,8 @@ package service
 import (
 	"errors"
 	"teguh/features/people"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type PersonService struct {
@@ -30,6 +32,15 @@ func (service *PersonService) GetAll() ([]people.CorePerson, error) {
 	Data, err := service.personRepository.GetAll()
 	if err != nil {
 		return nil, errors.New("Gagal menampilkan")
+	}
+	return Data, nil
+}
+
+// GetPerson implements people.ServiceEntities
+func (service *PersonService) GetPerson(id primitive.ObjectID) (people.CorePerson, error) {
+	Data, err := service.personRepository.GetPerson(id)
+	if err != nil {
+		return people.CorePerson{}, errors.New("Gagal menampilkan")
 	}
 	return Data, nil
 }

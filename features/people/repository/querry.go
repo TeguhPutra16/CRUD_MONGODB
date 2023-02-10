@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -52,4 +53,17 @@ func (repo *userRepository) GetAll() ([]people.CorePerson, error) {
 	dataCore := ListModelToCore(people)
 	return dataCore, nil
 
+}
+
+// GetPerson implements people.RepositoryEntities
+func (repo *userRepository) GetPerson(id primitive.ObjectID) (people.CorePerson, error) {
+	var person Person
+	collection := repo.client.Database("thepolyglotdeveloper").Collection("people")
+	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+	err := collection.FindOne(ctx, Person{ID: id}).Decode(&person)
+	if err != nil {
+		return people.CorePerson{}, err
+	}
+	Core := person.ModelToCore()
+	return Core, nil
 }
